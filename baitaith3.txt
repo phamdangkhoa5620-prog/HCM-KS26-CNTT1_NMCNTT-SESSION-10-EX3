@@ -1,0 +1,37 @@
+Phần 1. Phân tích
+1. Mapping 4 tham số VLOOKUP
+Mô hình: Nhân viên kho tra hồ sơ vận đơn để tìm giá cước.
+- Lookup_value: Mã vận đơn cần tra cứu.
+- Table_array: Bảng danh mục chứa mã vận đơn và giá cước ở Sheet Gia_Cuoc.
+- Col_index_num: Số thứ tự cột chứa giá cước trong vùng tra cứu, ví dụ 2.
+- Range_lookup: FALSE để tìm mã vận đơn chính xác.
+2. Giải pháp công nghệ
+- Word: Xây dựng quy trình vận hành kho bằng Heading 1, Heading 2; thống nhất phông chữ và màu thương hiệu FastMove.
+- Excel: Tự động tra cứu giá cước cho 500 dòng bằng VLOOKUP, cố định vùng dữ liệu bằng dấu $.
+- PowerPoint: Sử dụng Bar Chart để thể hiện KPI giao hàng; tiêu đề slide phải nêu kết luận nổi bật.
+- Dữ liệu: Mỗi cột chỉ chứa một loại thông tin, không gộp ô trong vùng dữ liệu, không để hàng trống và chuẩn hóa mã vận đơn.
+Phần 2. Triển khai Excel
+Giả sử:
+- Sheet Don_Hang: cột A là Mã vận đơn, cột B là Giá cước.
+- Sheet Gia_Cuoc: cột A là Mã vận đơn, cột B là Giá cước.
+Nhập công thức tại ô B2:
+=IFERROR(VLOOKUP(A2,Gia_Cuoc!$A$2:$B$501,2,FALSE),"Không tìm thấy mã")
+- A2: Mã vận đơn cần tra cứu.
+- Gia_Cuoc!$A$2:$B$501: Vùng tra cứu được cố định bằng $.
+- 2: Trả về giá cước ở cột thứ hai.
+- FALSE: Tìm kiếm chính xác.
+- IFERROR: Hiển thị thông báo thay vì lỗi khi không tìm thấy kết quả.
+Sau đó kéo công thức từ B2 xuống B501 để xử lý 500 vận đơn.
+Báo cáo KPI trên PowerPoint
+Ví dụ tiêu đề kết luận: “Tự động hóa tra cứu giúp giảm thời gian xử lý đơn hàng.”
+- Dùng biểu đồ cột ngang (Bar Chart) so sánh thời gian xử lý trước và sau tự động hóa.
+- Tô nổi bật cột thể hiện kết quả quan trọng.
+- Chỉ giữ 3–4 ý chính theo Miller's Law.
+- Ghi rõ đơn vị đo và nguồn dữ liệu; không tự xem số liệu minh họa là kết quả thực tế.
+Phần 3. Kiểm thử
+- Trường hợp 1: Mã vận đơn tồn tại → trả về đúng giá cước.
+- Trường hợp 2: Mã không tồn tại → hiển thị Không tìm thấy mã.
+- Trường hợp 3: Mã có khoảng trắng thừa → chuẩn hóa bằng TRIM.
+- Trường hợp 4: Mã có ký tự lạ → kiểm tra và làm sạch dữ liệu trước khi tra cứu.
+Nếu mã vận đơn ở A2 có khoảng trắng thừa, có thể dùng:
+=IFERROR(VLOOKUP(TRIM(A2),Gia_Cuoc!$A$2:$B$501,2,FALSE),"Không tìm thấy mã")
